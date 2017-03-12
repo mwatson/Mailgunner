@@ -76,7 +76,7 @@ class Mailgunner {
         if ($method == "POST") {
             $curlOpts[CURLOPT_POST] = true;
             if (count($data['attachment'])) {
-                $data['attachment'] = new CURLFile($data['attachment']);
+                $data['attachment'] = new \CURLFile($data['attachment']);
             }
             $curlOpts[CURLOPT_POSTFIELDS] = $data;
         }
@@ -87,16 +87,30 @@ class Mailgunner {
         $ch = curl_init();
         $opts = $this->getCurlOpts($endpoint, $data);
         curl_setopt_array($ch, $opts);
-        $result = curl_exec($ch);
-        if ($result === false) {
-            $result = "CURL Error: " . curl_error($ch);
+        $response = curl_exec($ch);
+        $result = [];
+        if ($response === false) {
+            $result = [
+                'success' => false,
+                'message' => "CURL Error: " . curl_error($ch),
+            ];
         } else {
-            $result = @json_decode($result, true);
-            if (isset($result['message'])) {
-                $result = "Mailgun Response: {$result['message']}";
+            $response = @json_decode($response, true);
+            if (isset($response['message'])) {
+                $result = [
+                    'success' => true,
+                    'message' => "Mailgun Response: {$result['message']}",
+                    'response' => $response,
+                ]
+            } else {
+                $result = [
+                    'success' => false,
+                    'response' => $response,
+                ];
             }
         }
         curl_close($ch);
+
         return $result;
     }
 }

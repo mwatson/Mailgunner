@@ -1,8 +1,6 @@
 Mailgunner
 ----
 
-[![Build Status](https://travis-ci.org/mwatson/BoggleSolver.svg?branch=master)](https://travis-ci.org/mwatson/BoggleSolver)
-
 Dead simple Mailgun sender. Requires cURL extension for PHP.
 
 ## Installing
@@ -18,13 +16,29 @@ If you use composer:
         }
     ],
     "require": {
-        "mwatson/BoggleSolver": "0.3.0"
+        "mwatson/Mailgunner": "dev-master"
     }
 }
 ```
 
 ## Usage
 
+```php
+$mgConfig = [
+    'url'    => "https://api.mailgun.net/v3",
+    'key'    => "YOUR_MAILGUN_API_KEY",
+    'domain' => "your.mailgun.domain",
+];
+
+$sender = Mailgunner::create($mgConfig)
+            ->to("someone@somewhere")
+            ->from("me <me@my.domain>")
+            ->subject("Sending an email!")
+            ->html($htmlBody)
+            ->text($textBody);
+
+$result = $sender->send();
+```
 
 ## Tests
 
