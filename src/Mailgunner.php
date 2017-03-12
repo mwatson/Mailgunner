@@ -99,7 +99,7 @@ class Mailgunner {
             if (isset($response['message'])) {
                 $result = [
                     'success' => true,
-                    'message' => "Mailgun Response: {$result['message']}",
+                    'message' => "Mailgun Response: {$response['message']}",
                     'response' => $response,
                 ];
             } else {
