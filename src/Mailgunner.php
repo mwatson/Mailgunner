@@ -75,7 +75,7 @@ class Mailgunner {
         ];
         if ($method == "POST") {
             $curlOpts[CURLOPT_POST] = true;
-            if (count($data['attachment'])) {
+            if ($data['attachment']) {
                 $data['attachment'] = new \CURLFile($data['attachment']);
             }
             $curlOpts[CURLOPT_POSTFIELDS] = $data;
