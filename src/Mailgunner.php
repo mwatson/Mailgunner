@@ -101,7 +101,7 @@ class Mailgunner {
                     'success' => true,
                     'message' => "Mailgun Response: {$result['message']}",
                     'response' => $response,
-                ]
+                ];
             } else {
                 $result = [
                     'success' => false,
